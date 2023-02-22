@@ -31,12 +31,14 @@ jobs:
         with:
           name: website-artifact
           path: public
+      - run: mkdir website
+      - run: tar -xf public/artifact.tar -C website
       - uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: unnecessary
       - run: ssh-keyscan -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
       - name: Deploy with rsync
-        run: rsync -avz public/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/www/public --delete
+        run: rsync -avz website/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/www/public --delete
         env:
           ALPEREN_SITE_VERSION: ${{ github.ref_name }}
