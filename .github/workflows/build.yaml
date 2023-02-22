@@ -17,5 +17,5 @@ jobs:
         run: yarn
         working-directory: ./src
       - name: Build
-        run: npm install yarn --global
+        run: yarn build
         working-directory: ./src
