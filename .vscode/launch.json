@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node-terminal",
+            "name": "Gatsby",
+            "command": "yarn start",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/src"
+        },
+        {
+            "type": "node",
+            "name": "Tailwind",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": ["tailwind --watch"],
+            "request": "launch",
+            "cwd": "${workspaceFolder}/src"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Development",
+            "configurations": ["Gatsby", "Tailwind"],
+            "stopAll": true,
+            "preLaunchTask": "👨 Prestart"
+        }
+    ]
+}

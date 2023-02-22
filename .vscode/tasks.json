@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "options": {
+        "cwd": "${workspaceFolder}/src"
+    },
+    "tasks": [
+        {
+            "type": "process",
+            "label": "💼 Prettier",
+            "command": "yarn",
+            "args": ["prettifier"]
+        },
+        {
+            "type": "process",
+            "label": "👨‍💼 Lint",
+            "command": "yarn",
+            "args": ["lint"]
+        },
+        {
+            "type": "process",
+            "label": "Clean",
+            "command": "yarn",
+            "args": ["clean"]
+        },
+        {
+            "type": "shell",
+            "args": ["prestart"],
+            "label": "👨 Prestart",
+            "command": "yarn"
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+name: 🌐 Deploy Website to Server
+
+on:
+  release:
+    types: [released, edited]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+            node-version: "18.12.x"
+      - name: Install Packages
+        run: yarn
+        working-directory: ./src
+      - name: Build
+        run: npm install yarn --global
+        working-directory: ./src
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        working-directory: ./src
+        with:
+          name: website-artifact
+          path: public/
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: website-artifact
+          path: public
+      - uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: unnecessary
+      - run: ssh-keyscan -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
+      - name: Deploy with rsync
+        run: rsync -avz ./public/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/www/public --delete
+        env:
+          ALPEREN_SITE_VERSION: ${{ github.ref_name }}
