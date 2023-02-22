@@ -9,9 +9,7 @@
         "url": "https://alperen.io"
     },
     "scripts": {
-        "prestart": "yarn prettifier && yarn lint",
         "start": "gatsby develop",
-        "prebuild": "yarn prestart && yarn clean",
         "build": "yarn tailwind && gatsby build",
         "serve": "gatsby serve",
         "clean": "gatsby clean",
